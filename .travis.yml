@@ -1,18 +1,14 @@
 dist: xenial
 
 addons:
-  apt:
-    packages:
-      - postgresql-11
-      - postgresql-11-postgis-2.5
-      - postgresql-11-postgis-2.5-scripts
-  postgresql: '11'
+  postgresql: '10'
 
 before_install:
-  - sudo sed -i 's/port = 5433/port = 5432/' /etc/postgresql/11/main/postgresql.conf
-  - sudo cp /etc/postgresql/{10,11}/main/pg_hba.conf
   - sudo service postgresql stop
-  - sudo service postgresql start 11
+  - curl -sLO https://apt.postgresql.org/pub/repos/apt/pool/main/g/geos/libgeos-3.7.1_3.7.1-1~pgdg16.04%2b1_amd64.deb && sudo dpkg -i libgeos-3.7.1_3.7.1-1~pgdg16.04%2b1_amd64.deb
+  - curl -sLO https://apt.postgresql.org/pub/repos/apt/pool/main/g/geos/libgeos-c1v5_3.7.1-1~pgdg16.04%2b1_amd64.deb && sudo dpkg -i libgeos-c1v5_3.7.1-1~pgdg16.04%2b1_amd64.deb
+  - sudo apt install postgresql-10-postgis-2.5 postgresql-10-postgis-2.5-scripts
+  - sudo service postgresql start 10
 
 services:
   - postgresql
